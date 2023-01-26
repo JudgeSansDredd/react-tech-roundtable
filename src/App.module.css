@@ -1,0 +1,17 @@
+.button {
+  padding: 1rem;
+  border-radius: 999999px;
+  background-image: linear-gradient(to bottom right, #20bf55, #01baef);
+}
+
+.button:hover {
+  cursor: pointer;
+  background-image: linear-gradient(to bottom right, #1cab4c, #00a7d7);
+}
+
+.textInput {
+  padding: 1rem;
+  border-radius: 999px;
+  border-width: 1px;
+  margin: 6px 0px;
+}

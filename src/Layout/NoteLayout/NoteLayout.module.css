@@ -1,0 +1,23 @@
+.noteLayout {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.noteLayout > :nth-child(even) {
+  transform: rotate(4deg);
+  position: relative;
+  top: 5px;
+}
+
+.noteLayout > div:nth-child(3n) {
+  transform: rotate(-3deg);
+  position: relative;
+  top: -5px;
+}
+
+.noteLayout > div:nth-child(5n) {
+  transform: rotate(5deg);
+  position: relative;
+  top: -10px;
+}
