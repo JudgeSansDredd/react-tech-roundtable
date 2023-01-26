@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-import styles from "./App.module.css";
-import Note from "./Components/Note/Note";
+import Button from "./Components/Button";
+import Note from "./Components/Note";
 import { NoteType } from "./Components/Note/Types";
-import MainLayout from "./Layout/MainLayout/MainLayout";
-import NoteLayout from "./Layout/NoteLayout/NoteLayout";
+import TextInput from "./Components/TextInput";
+import MainLayout from "./Layout/MainLayout";
+import NoteLayout from "./Layout/NoteLayout";
 
 function App() {
   const [notes, setNotes] = useState<NoteType[]>([]);
@@ -21,18 +22,17 @@ function App() {
     });
   };
 
-  const noteComponents = notes.map((note, i) => {
-    return <Note key={i} {...note} closeHandler={removeNoteById} />;
+  const noteComponents = notes.map((note) => {
+    return <Note key={note.id} {...note} closeHandler={removeNoteById} />;
   });
 
-  const handleAddButtonClick = () => {
+  const handleAddButtonClick: React.MouseEventHandler<HTMLDivElement> = (e) => {
     setNotes([...notes, newNote]);
     setNewNote({ title: "", content: "", id: uuidv4() });
   };
 
-  const handleInputChange = (name: string, value: string) => {
-    console.log(name);
-    console.log(value);
+  const handleInputChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+    const { name, value } = e.currentTarget;
     if (name === "title") {
       setNewNote((prev) => {
         return { ...prev, title: value };
@@ -44,53 +44,23 @@ function App() {
     }
   };
 
-  const Button = (props: {
-    onClick: React.MouseEventHandler<HTMLDivElement>;
-    text: string;
-  }) => {
-    return (
-      <div onClick={props.onClick} className={styles.button}>
-        {props.text}
-      </div>
-    );
-  };
-
-  const TextInput = (props: {
-    value: string;
-    onChange: React.ChangeEventHandler<HTMLInputElement>;
-  }) => {
-    return (
-      <input
-        className={styles.textInput}
-        type="text"
-        value={props.value}
-        onChange={props.onChange}
-      />
-    );
-  };
-
   return (
-    <div>
-      <div
-        style={{ width: "100vw", textAlign: "center", marginBottom: "3rem" }}
-      >
-        MY NOTETAKING APP
-      </div>
-      <MainLayout>
-        <NoteLayout>{noteComponents}</NoteLayout>
-        <div>New Title</div>
-        <TextInput
-          onChange={(e) => handleInputChange("title", e.currentTarget.value)}
-          value={newNote.title}
-        />
-        <div>New Content</div>
-        <TextInput
-          onChange={(e) => handleInputChange("content", e.currentTarget.value)}
-          value={newNote.content}
-        />
-        <Button onClick={() => handleAddButtonClick()} text="Add New Note" />
-      </MainLayout>
-    </div>
+    <MainLayout>
+      <NoteLayout>{noteComponents}</NoteLayout>
+      <div>New Title</div>
+      <TextInput
+        onChange={handleInputChange}
+        name="title"
+        value={newNote.title}
+      />
+      <div>New Content</div>
+      <TextInput
+        onChange={handleInputChange}
+        name="content"
+        value={newNote.content}
+      />
+      <Button onClick={handleAddButtonClick} text="Add New Note" />
+    </MainLayout>
   );
 }
 

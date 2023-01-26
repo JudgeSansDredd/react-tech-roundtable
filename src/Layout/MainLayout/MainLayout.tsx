@@ -1,6 +1,7 @@
+import React from "react";
 import styles from "./MainLayout.module.css";
 
-const MainLayout = (props: any) => {
+const MainLayout = (props: React.PropsWithChildren<{}>) => {
   return <div className={styles.wrapper}>{props.children}</div>;
 };
 
